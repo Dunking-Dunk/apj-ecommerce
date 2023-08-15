@@ -3,6 +3,7 @@ import cloudinary from "cloudinary";
 import Product from "../models/Product.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { authenticatedUser, authorizeRole } from "../middleware/auth.js";
+import Category from "../models/Category.js";
 
 const router = express.Router();
 
@@ -36,6 +37,15 @@ router.post(
 
     const product = await Product.create(req.body);
 
+    await product.category.map(
+      async (category) =>
+        await Category.findByIdAndUpdate(category, {
+          $push: {
+            products: product._id,
+          },
+        })
+    );
+
     res.status(201).json({
       success: true,
       product,
@@ -44,7 +54,18 @@ router.post(
 );
 
 router.get("/", async (req, res) => {
-  const products = await Product.find({});
+  const { search } = req.query;
+  let products;
+  if (search) {
+    products = await Product.find({
+      name: {
+        $regex: search,
+      },
+    });
+  } else {
+    products = await Product.find({});
+  }
+
   res.status(200).json({
     success: true,
     products,

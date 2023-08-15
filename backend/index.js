@@ -10,9 +10,12 @@ import cookieParser from "cookie-parser";
 import path from "path";
 
 import ProductRouter from "./routes/Product.js";
+import AdminRouter from "./routes/Admin.js";
 import UserRouter from "./routes/User.js";
 import PaymentRouter from "./routes/Payment.js";
 import OrderRouter from "./routes/Order.js";
+import CategoryRouter from "./routes/Category.js";
+import BillBoardReducer from "./routes/Billboard.js";
 import WebHookRouter from "./routes/Webhook.js";
 import ErrorHandler from "./middleware/error.js";
 
@@ -49,7 +52,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 app.use("/api/products", ProductRouter);
+app.use("/api/admins", AdminRouter);
 app.use("/api/users", UserRouter);
+app.use("/api/billboards", BillBoardReducer);
+app.use("/api/category", CategoryRouter);
 app.use("/api/payment", PaymentRouter);
 app.use("/api/orders", OrderRouter);
 

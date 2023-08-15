@@ -14,6 +14,19 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
+export const getSearchedProducts = createAsyncThunk(
+  "products/getSearchedProducts",
+  async (query, thunkAPI) => {
+    try {
+      const res = await api.get(`/products?search=${query}`);
+      const data = await res.data;
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue({ error: err.response.data });
+    }
+  }
+);
+
 export const getProduct = createAsyncThunk(
   "products/getProduct",
   async (body, thunkAPI) => {
@@ -79,6 +92,7 @@ const productsReducer = createSlice({
   name: "products",
   initialState: {
     products: [],
+    category: [],
     error: null,
     loading: false,
     product: null,
@@ -98,6 +112,18 @@ const productsReducer = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllProducts.rejected, (state, action) => {
+      state.error = action.payload.error;
+      state.loading = false;
+    });
+    builder.addCase(getSearchedProducts.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getSearchedProducts.fulfilled, (state, action) => {
+      state.category = action.payload.products;
+      state.error = null;
+      state.loading = false;
+    });
+    builder.addCase(getSearchedProducts.rejected, (state, action) => {
       state.error = action.payload.error;
       state.loading = false;
     });

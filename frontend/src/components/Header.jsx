@@ -1,27 +1,31 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { BiSolidUser } from 'react-icons/bi'
 import {AiOutlineClose, AiOutlineSearch, AiOutlineShoppingCart} from 'react-icons/ai'
 import {RxHamburgerMenu} from 'react-icons/rx'
-import { category } from '../dataSet/products'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getSearchedProducts } from "../store/ProductReducer";
 
 const Header = () => {
+    const dispatch = useDispatch()
     const containerRef = useRef()
     const modalRef = useRef()
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
-    const {totalItem} = useSelector((state) => state.Carts)
-
+    const location = useLocation()
+    const { totalItem } = useSelector((state) => state.Carts)
+    const {categories} = useSelector((state) => state.Categories)
     const helperFunction = () => {
         if (containerRef.current.style.left === '-100%') {
             containerRef.current.style.left = 0;
         } else {
             containerRef.current.style.left = '-100%';
         }
-        
     }
+    useEffect(() => {
+        modalRef.current.style.top = '-100%';
+    }, [location.pathname])
 
     const SearchModal = () => {
         if (modalRef.current.style.top === '-100%') {
@@ -32,7 +36,8 @@ const Header = () => {
     }
 
     const searchProduct = () => {
-        navigate(`/search/${search}`)
+        dispatch(getSearchedProducts(search))
+        navigate(`/search`)
         setSearch('')
     }
 
@@ -53,8 +58,7 @@ const Header = () => {
                     </Menu>
                         <Logo to='/'>APJ <LogoSpan>Store</LogoSpan></Logo>
                     </MobileContainer>
-                        <Category to='/products/new'>New</Category>
-                        {category.map((category, index) => <Category to={`/products/${category.title}`} key={index}>{category.title}</Category> )}
+                        {categories.map((category, index) => <Category to={`/products/${category._id}`} key={index}>{category.title}</Category> )}
                     <Category to='/products/all'>All</Category>
                     </CategoryContainer>
                 <RightContainer>

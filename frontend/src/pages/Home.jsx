@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Styled from 'styled-components'
-import {  category } from "../dataSet/products";
 
 import Carousel from "../components/Carousel";
 import TitleCarousel from "../components/Marque";
@@ -10,11 +9,13 @@ import CategoryCard from '../components/CategoryCard';
 import FeaturedCarousel from '../components/FeaturedCarousel';
 
 const Home = () => {
-    const {products} = useSelector((state) => state.Products)
+    const { products } = useSelector((state) => state.Products)
+    const {categories} = useSelector((state) => state.Categories)
+    const {billboards} = useSelector((state) => state.Billboards)
 
     return (
         <HomeContainer>
-            <Carousel products={products}/> 
+            <Carousel products={billboards}/> 
             <TitleCarousel title='Best Seller' emoji="🔥" para='It is what it is'/>
             <BestContainer>
                 {products.map(product => {
@@ -38,14 +39,14 @@ const Home = () => {
             <TitleCarousel title='Collections' emoji="😍" />
             <CollectionContainer>
                 
-                {category.map((category,index) => {
+                {categories.map((category,index) => {
                     return (
                         <CategoryCard category={category} key={index}/>
                     )
                 })}
             </CollectionContainer>
             <FeaturedCarousel products={products} />
-            {/* <TitleCarousel title='Dreams transform into thoughts and thoughts result in action' emoji="💪" /> */}
+            <TitleCarousel title='Dreams transform into thoughts and thoughts result in action' emoji="💪" />
         </HomeContainer>
     )
 }
@@ -69,7 +70,9 @@ background: #2193b0;
 background: -webkit-linear-gradient(to bottom, #6dd5ed, #2193b0); 
 background: linear-gradient(to bottom, #6dd5ed, #2193b0); 
 align-items: center;
-
+@media (max-width: 600px) {
+    justify-content: center; 
+}
 `
 const Title = Styled.h1`
     font-size: 6rem;
@@ -89,21 +92,21 @@ background-color: #2193b0;
 const DiscountContainer = Styled.div`
 display: flex;
 flex-wrap: wrap;
-gap: 2rem;align-items: center;
+gap: 2rem;
+align-items: center;
 
+@media (max-width: 600px) {
+    justify-content: center; 
+    
+}
 `
 
 const CollectionContainer = Styled.div`
 padding: 2rem;
-display: grid;
+display: flex;
+flex-wrap: wrap;
 width: 100%;
-height: 100vmax;
 gap: 1rem;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-template-rows: auto;
-  grid-template-areas: 
-    "laptop watch headphone mobile"
-    "accessories accessories accessories mobile";
     background: #000000; 
 background: -webkit-linear-gradient(to bottom, #2193b0, #000000); 
 background: linear-gradient(to bottom, #2193b0, #000000); 
@@ -111,5 +114,6 @@ background: linear-gradient(to bottom, #2193b0, #000000);
 @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
+    
 }
 `

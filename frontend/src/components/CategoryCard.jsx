@@ -29,9 +29,9 @@ const Card = ({ category }) => {
 
     return (
         <Container $area={category.title} ref={containerRef}>
-            <Image src={category.image} />
+            <Image src={category.image.url} />
             <Title>{category.title}</Title>
-            <Btn onClick={() => navigate(`/products/${category.title}`)}>Explore</Btn>
+            <Btn onClick={() => navigate(`/products/${category._id}`)}>Explore</Btn>
         </Container>
     )
 }
@@ -40,9 +40,10 @@ export default Card;
 
 const Container = Styled.div`
     position: relative;
-    grid-area: ${props => props.$area};
     border-radius: 2rem;
     overflow: hidden;
+    width: 45rem;
+    height: 70rem;
     @media (max-width: 600px) {
         width: 100%;
         height: 50rem;

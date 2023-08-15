@@ -20,6 +20,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PaymentRedirect from "./pages/PaymentRedirect";
 import UserOrder from "./pages/UserOrder";
+import { getAllCategory } from "./store/CategoryReducer";
+import { getAllBillboard } from "./store/BillboardReducer";
 
 
 gsap.registerPlugin(ScrollTrigger)
@@ -29,9 +31,10 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getUser())
-        dispatch(getUserOrders())
         dispatch(getAllProducts())
-    },[])
+        dispatch(getAllCategory())
+        dispatch(getAllBillboard())
+    },[dispatch])
 
     return (
         <BrowserRouter>
@@ -48,7 +51,7 @@ const App = () => {
                 <Route path="/account/register" element={<Register />} />
                 <Route path="/account/login" element={<Login />} />
                 <Route path="/admin/*" element={<Admin />} />
-                    <Route path="/search/:id" element={<Search />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/success" element={<PaymentRedirect/>} />
             </Routes>
             </ScrollToTop>

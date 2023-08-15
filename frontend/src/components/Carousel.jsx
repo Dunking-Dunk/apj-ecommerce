@@ -8,6 +8,7 @@ const Carousel = ({products, productPage}) => {
     const [active, setActive] = useState(0)
     const containerRef = useRef()
     const containerIndexRef = useRef()
+  
     useEffect(() => {
         const interval = setInterval(() => {
             if (active < products.length - 1)
@@ -17,7 +18,7 @@ const Carousel = ({products, productPage}) => {
             
         }, 3000)
         return () => clearInterval(interval)
-    }, [active])
+    }, [active, products])
 
 
     useEffect(() => {
@@ -40,9 +41,15 @@ const Carousel = ({products, productPage}) => {
                 {products.map((product, index) => {
                 return (
                      <ImageContainer key={index}>
-                        <Image src={productPage ? product?.url : product.images[0]?.url} $contain={productPage} />
+                        <Image src={productPage ? product?.url : product.image.url} $contain={productPage} />
                         {
-                            !productPage &&   <Btn>Buy now</Btn>
+                            !productPage && (
+                                <Sub>
+                                    <Title>{product.title}</Title>
+                                    <Btn to={product.link}>Buy</Btn>
+                                </Sub>
+                                
+                            )
                         }
                       
                      </ImageContainer>
@@ -71,24 +78,21 @@ const Container = Styled.div`
     `
 const Wrapper = Styled.div`
 display: flex;
+       flex-direction: row;
     width: 100%;
     height: 100%;
-  
 `
 const ImageContainer = Styled.div`
-       width: 100%;
+       min-width: 100%;
+       max-width: 100%;
        height: 100%;
-       display: flex;
-       align-items: center;
-       justify-content: center;
        position: relative;
- ;
-
+       
 `
 const Image = Styled.img`
- width: 100vw;
+width: 100%;
 height: 100%;
-object-fit: ${props => props.$contain ? 'contain': 'cover'}
+object-fit: ${props => props.$contain ? 'contain': 'cover'};
 `
 
 const ContainerIndex = Styled.div`
@@ -118,10 +122,24 @@ const Circle = Styled.div`
     }
 `
 
-const Btn = Styled(Link)`
+const Sub = Styled.div`
 position: absolute;
-left: 10rem;
-bottom: 8rem;
+left: 5%;
+bottom: 10%;
+display: flex;
+flex-direction: column;
+max-width: 90%;
+`
+
+const Title = Styled.h1`
+
+color: white;
+text-transform: uppercase;
+font-size: 5rem;
+padding: 0.5rem;
+`
+
+const Btn = Styled(Link)`
     font-size: 1.2rem;
     font-weight: 700;
     text-transform: uppercase;

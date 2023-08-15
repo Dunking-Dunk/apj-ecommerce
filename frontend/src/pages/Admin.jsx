@@ -12,8 +12,12 @@ import NewProduct from "./Admin/NewProduct";
 import UpdateProduct from "./Admin/UpdateProduct";
 import Orders from './Admin/Orders'
 import Order from "./Admin/Order";
+import Product from "./Admin/Product";
+import Billboard from "./Admin/Billboard";
 import { getAllOrders } from "../store/OrderReducer";
 import { getAllCustomers } from "../store/CustomerReducer";
+import { getQuickStats } from "../store/AdminReducer";
+import Categories from "./Admin/Categories";
 
 const Admin = () => {
     const { user } = useSelector((state) => state.User)
@@ -21,11 +25,11 @@ const Admin = () => {
 
     useEffect(() => {
         if (user?.role === "admin") {
-          
             dispatch(getAllCustomers())
             dispatch(getAllOrders())
+            dispatch(getQuickStats())
         } 
-    }, [user])
+    }, [user, dispatch])
 
     if (user?.role === "admin") { 
         return (
@@ -35,9 +39,12 @@ const Admin = () => {
                 <Routes>
                 <Route  index element={<Home/>} />
                         <Route path='customers' element={<Customer />} />
-                        <Route path='customers/new' element={<NewCustomer />} />
                         <Route path="products" element={<Products />} />
+                        <Route path='customers/new' element={<NewCustomer />} />
+                        <Route path="products/:id" element={<Product />} />
                         <Route path='products/new' element={<NewProduct />} />
+                        <Route path="category" element={<Categories />} />
+                        <Route path='/billboards' element={<Billboard/>} />
                         <Route path='products/update/:id' element={<UpdateProduct />} />
                         <Route path="orders" element={<Orders />} />
                         <Route path="orders/:id" element={<Order/>} />
@@ -59,5 +66,6 @@ const Container = Styled.div`
 `
 
 const Main = Styled.div`
-    flex: 7;
+    flex: 8;
+    overflow: hidden;
 `

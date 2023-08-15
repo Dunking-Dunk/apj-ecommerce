@@ -1,25 +1,28 @@
 import React from "react";
 import Styled from 'styled-components'
 import { useParams } from "react-router-dom";
-import {  testProducts } from '../dataSet/products'
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from '../components/ProductCard'
+import Loader from "../components/Loader";
 
 const Search = () => {
-    const { id } = useParams()
-    const products = []
-    
-    return (
-        <Container>
-            <Title>SEARCH</Title>
-            {products.length === 0 &&  <Para>No items found</Para>}
-           
-            <ProductsContainer>
-                {products.map((product, index) => 
-                    <ProductCard product={product} key={index}/>
-                )}
-            </ProductsContainer>
-        </Container>
-    )
+    const { category, loading} = useSelector((state) => state.Products) 
+
+    if (!loading) {
+        return (
+            <Container>
+                <Title>SEARCH</Title>
+                {category.length === 0 &&  <Para>No items found</Para>}
+               
+                <ProductsContainer>
+                    {category.map((product, index) => 
+                        <ProductCard product={product} key={index}/>
+                    )}
+                </ProductsContainer>
+            </Container>
+        )
+    }else return <Loader/>
+
 }
 
 export default Search

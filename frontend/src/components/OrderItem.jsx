@@ -97,8 +97,8 @@ const OrderItem = ({ order,admin, setState, updateStatus, state }) => {
 </CartContainer>
         </Wrapper>
         <StatusContainer>
-        <Title>Order Status</Title>
-        <Stepper activeStep={ orderStatus.findIndex((status) => status === state ? state: order?.orderStatus )}>
+                <Title>Order Status</Title>
+        <Stepper activeStep={ orderStatus.findIndex((status) => status ===(admin ?state: order.orderStatus ))}>
         {orderStatus.map((label) => (
             <Step key={label} >
                 < StepLabel style={{ cursor: 'pointer' }} onClick={() => {

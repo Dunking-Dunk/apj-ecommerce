@@ -56,6 +56,10 @@ const Container = Styled.div`
     border-radius: 1.5rem;
     padding: 1rem;
     background-color: white;
+
+    @media (max-width: 600px) {
+    width:100%; 
+}
 `
 const ImageContainer = Styled.div`
    height: 85%;

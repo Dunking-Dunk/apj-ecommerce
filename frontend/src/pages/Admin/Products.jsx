@@ -23,14 +23,20 @@ const Product = () => {
         {
           field: "name",
           headerName: "Name",
-          width: 200,
+          width: 250,
         },
         {
           field: "category",
-          headerName: "Category",
+          headerName: "Number Categories",
           width: 150,
           
-      },  {
+      },
+      {
+        field: "color",
+        headerName: "Color",
+        width: 150,
+    },
+      {
         field: "price",
         headerName: "Price",
         width: 150,
@@ -39,7 +45,8 @@ const Product = () => {
         field: "stock",
         headerName: "Stock",
         width: 100,
-    },
+      },
+  
       {
         field: "action",
         headerName: "Action",
@@ -47,6 +54,7 @@ const Product = () => {
         renderCell: (params) => {
           return (
             <TableRow>
+                        <Item $type='success' to={`/admin/products/${params.id}`}>View</Item>
               <Item $type='success' to={`/admin/products/update/${params.id}`}>update</Item>
                <Item $type='danger'onClick={() => handleDelete(params.id)}>delete</Item>
             </TableRow>
@@ -56,14 +64,15 @@ const Product = () => {
     ];
     const productsRow = () => {
       return products.map((product, i) => {
-          
+          console.log(product)
           return {
             sno: i + 1,
             id: product._id,
             name: product.name,
-            category: product.category,
+            category: product.category.length,
             price: product.price.toFixed(2),
-            stock: product.stock
+            stock: product.stock,
+            color: product.color
           }
         })
       }
@@ -97,10 +106,11 @@ export const Row = Styled.div`
     align-items:center;
     justify-content:space-between;
     margin-bottom: 3rem;
+    border-bottom: 0.1rem solid rgba(0,0,0,0.5);
 `
 
 export const Title = Styled.h1`
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 700;
     text-transform: uppercase;
 `

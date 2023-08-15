@@ -1,21 +1,8 @@
 import React from "react";
 import Styled from 'styled-components'
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
-import {GiPencil} from 'react-icons/gi'
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import StoreIcon from "@mui/icons-material/Store";
-import MergeTypeIcon from '@mui/icons-material/MergeType';
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import AnnouncementIcon from '@mui/icons-material/Announcement';
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import PersonIcon from '@mui/icons-material/Person';
+
 
 const Sidebar = () => {
 //   const user = useSelector((state) => state.users.user)
@@ -27,26 +14,43 @@ const Sidebar = () => {
         <Ul>
           <Title>MAIN</Title>
           <Item to="/admin" style={{ textDecoration: "none" }}>
+        
           <Li>
             <ItemSpan>Dashboard</ItemSpan>
           </Li>
           </Item>
+
           <Title>LISTS</Title>
           <Item to="/admin/products" style={{ textDecoration: "none" }}>
             <Li>
               <ItemSpan>Products</ItemSpan>
             </Li>
           </Item>
+          <Hr />
+          <Item to="/admin/category" style={{ textDecoration: "none" }}>
+            <Li>
+              <ItemSpan>Categories</ItemSpan>
+            </Li>
+          </Item>
+          <Hr/>
+          <Item to="/admin/billboards" style={{ textDecoration: "none" }}>
+            <Li>
+              <ItemSpan>BillBoard</ItemSpan>
+            </Li>
+          </Item>
+          <Hr/>
           <Item to="/admin/customers" style={{ textDecoration: "none" }}>
             <Li>
               <ItemSpan>Customers</ItemSpan>
             </Li>
           </Item>
+          <Hr/>
           <Item to="/admin/orders" style={{ textDecoration: "none" }}>
             <Li>
               <ItemSpan>Orders</ItemSpan>
             </Li>
           </Item>
+          <Hr/>
         </Ul>
       </Center>
     </Container>
@@ -63,20 +67,9 @@ const Container = Styled.div`
   background-color: white;
 `
 
-const Top = Styled.div`
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-const Span = Styled.div`
-     font-size: 20px;
-      font-weight: bold;
-      color: black;
-`
-
 const Item = Styled(Link)`
     text-decoration: none;
+
 `
 const Hr = Styled.hr`
     height: 0;

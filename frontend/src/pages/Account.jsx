@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Styled from 'styled-components'
-import { logoutUser} from '../store/UserReducer'
+import { logoutUser } from '../store/UserReducer'
+import { getUserOrders } from "../store/UserReducer";
 import { useSelector, useDispatch } from "react-redux";
 import moment from 'moment'
 import CartItem from "../components/CartItem";
+import Loader from "../components/Loader";
 
 
 const Account = () => {
@@ -14,7 +16,10 @@ const Account = () => {
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/account/login')
-
+        if (isAuthenticated && !orders ){
+            dispatch(getUserOrders())
+        }
+       
     }, [isAuthenticated])
 
     const handleLogout = () => {
@@ -22,7 +27,7 @@ const Account = () => {
         navigate('/')
     }
     
-    if (isAuthenticated && orders && user) {
+    if (isAuthenticated && user ) {
         return (
             <Container>
                 <Title>User Account</Title>
@@ -40,7 +45,7 @@ const Account = () => {
                 </Row>
                 <OrdersContainer>
                     <Title>Orders</Title>
-                    {orders.map((order) => {
+                    {orders?.map((order) => {
                         return (
                             <OrderContainer>
                                 {order.orderItems.map((order, index) => {
@@ -62,7 +67,7 @@ const Account = () => {
                   
             </Container>
         )
-    }
+    }else return <Loader/>
 }
 
 export default Account

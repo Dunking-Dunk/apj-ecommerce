@@ -1,28 +1,37 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Styled from 'styled-components'
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProductCard from '../components/ProductCard'
+import Loader from '../components/Loader'
+import { getCategory } from "../store/CategoryReducer";
 
 
 const Products = () => {
     const { id } = useParams()
-    const { products } = useSelector((state) => state.Products)
-    const findProducts = id == 'all' || id === 'new' ? products : products.filter((product) => product.category === id)
+    const dispatch = useDispatch()
+    const {products} = useSelector((state) => state.Products )
+    const { category } = useSelector((state) => state.Categories)
 
-    
-    return (
-        <Container>
-            <Title>{id}</Title>
-            {findProducts.length === 0 &&  <Para>No items found</Para>}
-           
-            <ProductsContainer>
-                {findProducts.map((product, index) => 
-                    <ProductCard product={product} key={index}/>
-                )}
-            </ProductsContainer>
-        </Container>
-    )
+    useEffect(() => {
+            dispatch(getCategory(id))
+    }, [dispatch, id])
+
+    if (category) {
+        return (
+            <Container>    
+                    <Title>{id === 'all' ? 'all' :category.title}</Title>
+                {category.products.length === 0 &&  <Para>No items found</Para>}
+               
+                <ProductsContainer>
+                    {(id === 'all' ? products : category.products).map((product, index) => 
+                        <ProductCard product={product} key={index}/>
+                    )}
+                </ProductsContainer>
+            </Container>
+        )
+    }else return <Loader/>
+   
 }
 
 export default Products

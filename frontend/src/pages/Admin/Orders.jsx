@@ -33,7 +33,7 @@ const Orders = () => {
         {
             field: "price",
             headerName: "Total Price",
-            width: 100,
+            width: 150,
             
       },
       {

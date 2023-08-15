@@ -42,7 +42,7 @@ const Product = () => {
                 </Row>
                 <About>
                         <Header>About this item:</Header>
-                        {product.description.split('<br>').map((line, index) => 
+                        {product.description.split('.').map((line, index) => 
                        <List key={index}>{line}</List> )}
                 </About>
                 <Row>
@@ -69,43 +69,42 @@ const Product = () => {
 
 export default Product;
 
-const Wrapper =   Styled.div`
+export const Wrapper =  Styled.div`
     width:100%;
     height: 100%;
 `
 
-const Container = Styled.div`
+export const Container = Styled.div`
     width:100%;
     height: 100%;
-    padding: 1.5rem;
+    padding: 2rem;
     display: flex;
     flex-direction: row;
     gap: 8rem;
     @media (max-width: 1200px) { 
         flex-direction: column;
-        align-items: center;
         gap: 2rem
     }
 `
-const ImageContainer = Styled.div`
+export const ImageContainer = Styled.div`
     width: 50%;
     @media (max-width: 1200px) { 
         width: 100%
     }
 `
-const DetailContainer = Styled.div`
+export const DetailContainer = Styled.div`
 flex: 1;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
 margin-top: 5rem;
 `
-const Text = Styled.p`
+export const Text = Styled.p`
     text-transform: capitalize;
     font-size: 2rem;
     font-weight: 400;
 `
-const Row = Styled.div`
+export const Row = Styled.div`
     display: flex;
     width: 100%;
     gap: 2rem;
@@ -115,19 +114,19 @@ const Row = Styled.div`
     margin-bottom: 3rem;
 `
 
-const Header = Styled.h3`
+export const Header = Styled.h3`
     font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 1rem;
 `
 
-const Title = Styled.h1`
+export const Title = Styled.h1`
     font-size: 3rem;
     font-weight: 900;
     text-transform: uppercase;
 `
-const Category = Styled.h3`
+export const Category = Styled.h3`
  font-size: 1.5rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -135,11 +134,11 @@ const Category = Styled.h3`
     color: rgba(0,0,0,0.5);
 `
 
-const About = Styled.div`
+export const About = Styled.div`
     margin-bottom: 2rem;
 `
 
-const List = Styled.li`
+export const List = Styled.li`
  font-size: 1.5rem;
  font-weight: 400;
  text-transform: capitalize;
@@ -147,19 +146,19 @@ const List = Styled.li`
  `
 
 
-const Price = Styled.p`
+export const Price = Styled.p`
  font-size: 2rem;
  font-weight: 300;
  text-transform: capitalize;
  opacity: 0.6;
 `
-const InStock = Styled.div`
+export const InStock = Styled.div`
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
     background-color: ${props => props.$stock ? 'green': 'red'};
 `
-const Btn = Styled.button`
+export const Btn = Styled.button`
     height: 5rem;
     width: 100%;
     text-transform: uppercase;
@@ -195,7 +194,7 @@ const Btn = Styled.button`
     }
 `
 
-const SimilarContainer = Styled.div`
+export const SimilarContainer = Styled.div`
     padding: 2rem;
     width: 100%;
     height: 100%;
